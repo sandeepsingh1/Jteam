@@ -1,0 +1,36 @@
+package com.sample.rules;
+ 
+import com.sample.AdmissionDetails;
+global java.util.List list
+
+rule "Prolonged length of stay General Ward- Unspecified"
+    when
+        a : AdmissionDetails( diseaseName == "General Ward- Unspecified" &&  duration > 3 )
+    then
+        //a.setValidationStatus(false);
+       // a.setValidationReponse( "Stay for "+a.diseaseName+" can not be greater than 3 days : URN ="+a.urn+"; Duration = "+a.duration+" days; Name = "+a.patientName);
+       list.add("Stay for "+a.diseaseName+" can not be greater than 3 days : URN ="+a.urn+"; Duration = "+a.duration+" days; Name = "+a.patientName );
+       //modify(a) {validationStatus = false, validationReponse = "Stay for "+a.diseaseName+" can not be greater than 3 days : URN ="+a.urn+"; Duration = "+a.duration+" days; Name = "+a.patientName };
+end
+
+rule "Prolonged length of stay CHOLECYSTECTOMY"
+    when
+        a : AdmissionDetails( diseaseName == "CHOLECYSTECTOMY" && duration > 4 )
+    then
+        //a.setValidationStatus(false);
+       //a.setValidationReponse( "Stay for "+a.diseaseName+" can not be greater than 4 days : URN ="+a.urn+"; Duration = "+a.duration+" days; Name = "+a.patientName);
+        //update( a );
+       list.add("Stay for "+a.diseaseName+" can not be greater than 4 days : URN ="+a.urn+"; Duration = "+a.duration+" days; Name = "+a.patientName);
+       //modify(a) {validationStatus = false, validationReponse = "Stay for "+a.diseaseName+" can not be greater than 4 days : URN ="+a.urn+"; Duration = "+a.duration+" days; Name = "+a.patientName};
+end
+
+rule "Prolonged length of stay Hernia"
+    when
+        a : AdmissionDetails( diseaseName == "Hernia - Repair & release of obstruction" && duration > 2 )
+    then
+        //a.setValidationStatus(false);
+        //a.setValidationReponse( "Stay for "+a.diseaseName+" can not be greater than 2 days : URN ="+a.urn+"; Duration = "+a.duration+" days; Name = "+a.patientName);
+        //update( a );
+       list.add("Stay for "+a.diseaseName+" can not be greater than 2 days : URN ="+a.urn+"; Duration = "+a.duration+" days; Name = "+a.patientName);
+       //modify(a) {validationStatus = false, validationReponse = "Stay for "+a.diseaseName+" can not be greater than 2 days : URN ="+a.urn+"; Duration = "+a.duration+" days; Name = "+a.patientName};
+end 

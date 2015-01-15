@@ -1,0 +1,30 @@
+table.tablesorter {
+	margin: 10px 0pt 15px; width: 100%; text-align: left; font-family: arial; font-size: 8pt; background-color: rgb(205, 205, 205);
+}
+table.tablesorter thead tr th {
+	padding: 4px; border: 1px solid rgb(255, 255, 255); border-image: none; font-size: 8pt; background-color: rgb(230, 238, 238);
+}
+table.tablesorter tfoot tr th {
+	padding: 4px; border: 1px solid rgb(255, 255, 255); border-image: none; font-size: 8pt; background-color: rgb(230, 238, 238);
+}
+table.tablesorter thead tr .header {
+	background-position: right; cursor: pointer; background-image: url("bg.gif"); background-repeat: no-repeat;
+}
+table.tablesorter tbody td {
+	padding: 4px; color: rgb(61, 61, 61); vertical-align: top; background-color: rgb(255, 255, 255);
+}
+table.tablesorter tbody tr.odd td {
+	background-color: rgb(240, 240, 246);
+}
+table.tablesorter thead tr .headerSortUp {
+	background-image: url("asc.gif");
+}
+table.tablesorter thead tr .headerSortDown {
+	background-image: url("desc.gif");
+}
+table.tablesorter thead tr .headerSortDown {
+	background-color: rgb(141, 189, 216);
+}
+table.tablesorter thead tr .headerSortUp {
+	background-color: rgb(141, 189, 216);
+}

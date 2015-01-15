@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<HTML lang="en">
+<HEAD>
+<META content="IE=11.0000" http-equiv="X-UA-Compatible">
+<TITLE>Hannover-re</TITLE>
+<META charset="utf-8">
+<STYLE>
+@
+-webkit-viewport {
+	width: device-width;
+}
+
+@
+-moz-viewport {
+	width: device-width;
+}
+
+@
+-ms-viewport {
+	width: device-width;
+}
+
+@
+-o-viewport {
+	width: device-width;
+}
+
+@
+viewport {
+	width: device-width;
+}
+</STYLE>
+<LINK href="css/css.css" rel="stylesheet" type="text/css">
+<LINK href="css/Examples.css" rel="stylesheet">
+</HEAD>
+<BODY>
+
+	<DIV class="sitewrapper container">
+		<SECTION id="basic">
+			<DIV id="example-basic" style="display: none;">
+				<H3>Keyboard</H3>
+				<SECTION>
+					<P>Try the keyboard navigation by clicking arrow left or right!</P>
+				</SECTION>
+				<H3>Effects</H3>
+				<SECTION>
+					<P>Wonderful transition effects.</P>
+				</SECTION>
+				<H3>Pager</H3>
+				<SECTION>
+					<P>The next and previous buttons help you to navigate through
+						your content.</P>
+				</SECTION>
+			</DIV>
+		</SECTION>
+	</DIV>
+	<SCRIPT src="js/Examples.js"></SCRIPT>
+
+	<SCRIPT>
+	$(function() {
+//		$("#init-basic").one("click", function(e) {
+//			e.stopPropagation();
+//			$(this).remove();
+			$("#example-basic").show().steps({
+				headerTag : "h3",
+				bodyTag : "section",
+				transitionEffect : "slideLeft",
+				autoFocus : true
+			});
+		//});
+	});
+
+	</SCRIPT>
+</BODY>
+</HTML>

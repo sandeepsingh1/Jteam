@@ -1,0 +1,108 @@
+body {
+	margin: 0px; padding: 0px; font-family: "trebuchet ms", verdana, arial;
+}
+div {
+	margin: 0px; padding: 0px; font-family: "trebuchet ms", verdana, arial;
+}
+h1 {
+	margin: 0px; padding: 0px; font-family: "trebuchet ms", verdana, arial;
+}
+body {
+	margin: 0px; padding: 0px; color: rgb(51, 51, 51); font-size: small; background-color: rgb(255, 255, 255);
+}
+h1 {
+	margin: 0px; font-size: large; font-weight: 400;
+}
+h2 {
+	margin: 0px; color: rgb(51, 51, 51); font-size: small; font-weight: 400;
+}
+pre {
+	border-width: 1px 1px 1px 5px; border-style: solid; border-color: rgb(221, 221, 221); padding: 15px; border-image: none; color: rgb(51, 51, 51); font-size: small; -ms-overflow-x: auto; background-color: rgb(238, 238, 238);
+}
+pre.normal {
+	border-width: medium medium medium 0px; border-color: currentColor; border-image: none; -ms-overflow-x: auto; background-color: transparent;
+}
+#external {
+	margin: 20px;
+}
+#logo {
+	background: url("images/jq.png"); width: 110px; height: 31px; margin-top: 10px; margin-right: 10px; float: right; display: block;
+}
+#main {
+	margin: 0px 25px 0px 40px; padding: 0px 15px 15px 0px;
+}
+#content {
+	padding: 20px;
+}
+#busy {
+	padding: 3px; border: 1px ridge rgb(204, 204, 204); border-image: none; top: 7px; right: 7px; color: rgb(238, 238, 238); display: none; position: absolute; background-color: rgb(233, 85, 85);
+}
+hr {
+	height: 1px;
+}
+code {
+	padding: 0px; font-size: 108%; font-style: normal;
+}
+ul {
+	list-style: square; color: rgb(51, 51, 51);
+}
+#banner {
+	margin: 40px 40px 0px; text-align: left; padding-bottom: 10px;
+}
+#banner * {
+	margin: 0px; padding: 0px; color: rgb(35, 33, 33); font-family: Georgia, Palatino, Times New Roman; font-size: 30px; font-style: normal; font-weight: 400;
+}
+#banner h1 {
+	float: left; display: block;
+}
+#banner h1 em {
+	color: rgb(102, 204, 255);
+}
+#banner h2 {
+	margin: 10px 10px -10px -10px; font-size: 26px; float: right;
+}
+#banner h3 {
+	clear: both; font-size: 12px; margin-top: -20px; display: block;
+}
+#banner a {
+	margin: 5px 0px 0px; padding: 10px 0px 0px; width: auto; text-align: right; font-size: 14px; border-top-color: rgb(136, 136, 136); border-top-width: 1px; border-top-style: solid; display: block;
+}
+a.external {
+	background-position: right; padding-right: 12px; background-image: url("../img/external.png"); background-repeat: no-repeat;
+}
+form {
+	width: auto; font-size: 10pt; margin-bottom: 20px;
+}
+form fieldset {
+	padding: 10px; width: 140px; text-align: left;
+}
+div#main h1 {
+	padding: 10px 0px 2px; margin-top: 20px; border-bottom-color: rgb(205, 205, 205); border-bottom-width: 1px; border-bottom-style: solid; display: block;
+}
+table#tablesorter-demo {
+	margin: 10px 0px 0px;
+}
+table#options * {
+	font-size: small;
+}
+p.tip em {
+	padding: 2px; color: rgb(255, 255, 255); background-color: rgb(102, 204, 255);
+}
+p.update.tip em {
+	background-color: rgb(255, 0, 0);
+}
+div.digg {
+	margin-left: 20px; float: right;
+}
+#skyscraper {
+	background: rgb(238, 238, 238); padding: 20px; margin-right: 0px; margin-left: 20px; float: right;
+}
+#skyscraper > div {
+	margin-bottom: 20px;
+}
+.wide#skyscraper {
+	text-align: center; overflow: hidden; margin-left: 0px; float: none;
+}
+.wide#skyscraper > div {
+	margin-right: 20px; margin-bottom: 0px; display: inline-block;
+}
