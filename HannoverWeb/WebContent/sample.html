@@ -1,51 +1,54 @@
-<!DOCTYPE HTML>
-<HTML lang="en"><HEAD><META content="IE=11.0000" 
-http-equiv="X-UA-Compatible">
-	 
-<META charset="utf-8">	 <TITLE>jQuery UI Accordion - Default 
-functionality</TITLE>	 
-<LINK href="css/jquery-ui.css" rel="stylesheet">	 
-<SCRIPT src="js/jquery-1.10.2.js"></SCRIPT>
-<SCRIPT src="js/jquery-ui.js"></SCRIPT>
-<LINK href="css/styleAcc.css" rel="stylesheet">	 
-<SCRIPT>
-	$(function() {
-		$( "#accordion" ).accordion();
-	});
-	</SCRIPT>
- 
-<META name="GENERATOR" content="MSHTML 11.00.9600.17207"></HEAD> 
-<BODY>
-<DIV id="accordion">
-<H3>Section 1</H3>
-<DIV>
-<P>		Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-		ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit		amet, 
-nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut		odio. 
-Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-		 </P></DIV>
-<H3>Section 2</H3>
-<DIV>
-<P>		Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-		purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-		velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-		suscipit faucibus urna.		 </P></DIV>
-<H3>Section 3</H3>
-<DIV>
-<P>		Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-		Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero		ac 
-tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis		lacinia 
-ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.		 </P>
-<UL>
-  <LI>List item one</LI>
-  <LI>List item two</LI>
-  <LI>List item three</LI></UL></DIV>
-<H3>Section 4</H3>
-<DIV>
-<P>		Cras dictum. Pellentesque habitant morbi tristique senectus et netus		et 
-malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in		faucibus 
-orci luctus et ultrices posuere cubilia Curae; Aenean lacinia		mauris vel est.
-		 </P>
-<P>		Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
-		Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-		inceptos himenaeos.		 </P></DIV></DIV></BODY></HTML>
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>Collapse</h2>
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Collapsible Group 1</a>
+            </h4>
+          </div>
+          <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Collapsible Group 2</a>
+            </h4>
+          </div>
+          <div id="collapse2" class="panel-collapse collapse">
+            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Collapsible Group 3</a>
+            </h4>
+          </div>
+          <div id="collapse3" class="panel-collapse collapse">
+            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+          </div>
+        </div>
+      </div> 
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

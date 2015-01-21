@@ -1,13 +1,11 @@
 package com.hannover.rules;
  
-import com.hannover.model.PatientCliamDetail;
-global java.util.List list
+import com.hannover.model.PatientClaimDetail;
 
 rule "Prolonged length of stay General Ward- Unspecified"
     when
-        p : PatientCliamDetail(diseaseName == "General Ward- Unspecified" &&  numberOfDays > 3 )
+        p : PatientClaimDetail(diseaseName == "General Ward- Unspecified" &&  numberOfDays > 3 )
     then
-       list.add("Stay for "+p.diseaseName+" can not be greater than 3 days : URN ="+p.urn+"; Duration = "+p.numberOfDays+" days; Name = "+p.patientName );
        p.ruleRemarks = "Stay for "+p.diseaseName+" can not be greater than 3 days";
        p.trendName = "Prolong Stay";
        p.ruleStatus = "failed";
@@ -15,9 +13,8 @@ end
 
 rule "Prolonged length of stay CHOLECYSTECTOMY"
     when
-        p : PatientCliamDetail(diseaseName == "CHOLECYSTECTOMY" &&  numberOfDays > 4 )
+        p : PatientClaimDetail(diseaseName == "CHOLECYSTECTOMY" &&  numberOfDays > 4 )
     then
-       list.add("Stay for "+p.diseaseName+" can not be greater than 4 days : URN ="+p.urn+"; Duration = "+p.numberOfDays+" days; Name = "+p.patientName );
        p.ruleRemarks = "Stay for "+p.diseaseName+" can not be greater than 4 days";
        p.trendName = "Prolong Stay";
        p.ruleStatus = "failed";
@@ -25,9 +22,8 @@ end
 
 rule "Prolonged length of stay Hernia"
     when
-        p : PatientCliamDetail(diseaseName == "Hernia - Repair & release of obstruction" && numberOfDays > 2 )
+        p : PatientClaimDetail(diseaseName == "Hernia - Repair & release of obstruction" && numberOfDays > 2 )
     then
-       list.add("Stay for "+p.diseaseName+" can not be greater than 2 days : URN ="+p.urn+"; Duration = "+p.numberOfDays+" days; Name = "+p.patientName );
        p.ruleRemarks = "Stay for "+p.diseaseName+" can not be greater than 2 days";
        p.trendName = "Prolong Stay";
        p.ruleStatus = "failed";
@@ -35,9 +31,8 @@ end
 
 rule "Disease not related to gender/age"
     when
-        p : PatientCliamDetail(diseaseName == "CHOLECYSTECTOMY" && gender == "Male" )
+        p : PatientClaimDetail(diseaseName == "CHOLECYSTECTOMY" && gender == "Male" )
     then
-       list.add(p.diseaseName+" is not applicable for males.");
        p.ruleRemarks = p.diseaseName+" is not applicable for males.";
        p.trendName = "Disease not related to gender/age";
        p.ruleStatus = "failed";
@@ -45,9 +40,8 @@ end
 
 rule "Very Short/Prolonged Length of stay (LOS)"
     when
-        p : PatientCliamDetail(diseaseName == "Tumour excision" && numberOfDays <= 2 )
+        p : PatientClaimDetail(diseaseName == "Tumour excision" && numberOfDays <= 2 )
     then
-       list.add("Stay for "+p.diseaseName+" is too short.");
        p.ruleRemarks = "Stay for "+p.diseaseName+" is too short.";
        p.trendName = "Very Short/Prolonged Length of stay (LOS)";
        p.ruleStatus = "failed";

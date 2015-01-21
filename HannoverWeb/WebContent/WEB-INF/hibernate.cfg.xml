@@ -19,6 +19,7 @@
    	  <mapping class="com.hannover.model.PackageDetail"/>
    	  <mapping class="com.hannover.model.HospitalDetail"/>
    	  <mapping class="com.hannover.model.DiseaseDetail"/>
-   	  <mapping class="com.hannover.model.PatientCliamDetail"/>
+   	  <mapping class="com.hannover.model.PatientClaimDetail"/>
+   	  <mapping class="com.hannover.model.UploadDetail"/>
 </session-factory>
 </hibernate-configuration>

@@ -57,7 +57,8 @@ public class DAOImpl<T extends PO> implements DAO<T> {
 			Session session = getCurrentSession();
 			session.beginTransaction();
 			session.save(po);
-			session.close();
+			session.getTransaction().commit();
+			//session.close();
 			//flushSession();
 		}
 		catch(HibernateException he){
@@ -245,16 +246,20 @@ public class DAOImpl<T extends PO> implements DAO<T> {
 	 */
 	public T searchUnique(SearchVO searchVO) throws DAOException{
 		System.out.println("Entering :: DAOImpl:search()");
+		T t;
 		try{
+			Transaction tx = getCurrentSession().beginTransaction();
 			Criteria criteria = getCriteria();
 			searchVO.buildSearchCriteria(criteria);
 			System.out.println("Exiting :: DAOImpl:search()");
-			return (T)criteria.uniqueResult();
+			t= (T)criteria.uniqueResult();
+			tx.commit();
 		}
 		catch(HibernateException he){
 			System.out.println(he);
 			throw new DAOException(he);
 		}
+		return t;
 	}
 	
 	/**
@@ -267,8 +272,10 @@ public class DAOImpl<T extends PO> implements DAO<T> {
 		Session session = null;
 		try{
 			session = getCurrentSession();
+			session.beginTransaction();
 			session.saveOrUpdate(po);
-			flushSession();
+			session.getTransaction().commit();
+			//flushSession();
 		} catch(NonUniqueObjectException nuoe){
 			session.merge(po);
 			flushSession();

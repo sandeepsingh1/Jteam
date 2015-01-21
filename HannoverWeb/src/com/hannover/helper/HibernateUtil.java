@@ -1,7 +1,6 @@
 package com.hannover.helper;
 
 import java.io.File;
-import java.net.URL;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;

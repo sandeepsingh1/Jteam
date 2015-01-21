@@ -38,11 +38,12 @@
             <li >
                 <a href="/uploadFile.do?method=init"><i class="fa fa-flask leftNavIcon"></i> Upload File</a>
             </li>
+            
              <li>
-                <a href="/uploadFile.do?method=showReport"><i class="fa fa-flask leftNavIcon"></i> Trends Report</a>
+                <a href="/uploadFile.do?method=showReport"><i class="fa fa-flask leftNavIcon"></i>Dashboard</a>
             </li>
             <li class="active">
-                <a href="/uploadFile.do?method=showTable"><i class="fa fa-flask leftNavIcon"></i> Trends Table</a>
+                <a href="/uploadFile.do?method=showTable"><i class="fa fa-flask leftNavIcon"></i>Anomalies</a>
             </li>
             <li>
                 <a href="/uploadFile.do?method=showTrigger"><i class="fa fa-flask leftNavIcon"></i> Trigger 1</a>
@@ -55,6 +56,10 @@
             </li>
             <li>
                 <a href="#"><i class="fa fa-flask leftNavIcon"></i> Contact us</a>
+            </li>
+            </br></br>
+            <li>
+                <a href="/uploadFile.do?method=showTriggerPivot"><i class="fa fa-flask leftNavIcon"></i> Pivot Utility</a>
             </li>
         </ul>
 

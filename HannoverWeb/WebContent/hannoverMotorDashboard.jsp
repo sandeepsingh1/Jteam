@@ -5,179 +5,165 @@
 <head>
 <title>Hannover-re Dashboard</title>
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,600"	rel="stylesheet" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="css/app.css" rel="stylesheet" type="text/css">
+
+
 <LINK href="css/css.css" rel="stylesheet" type="text/css">
 <LINK href="css/Examples.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/style4.css" />
-
-
-<LINK href="css/jquery-ui.css" rel="stylesheet">	 
-
-<LINK href="css/styleAcc.css" rel="stylesheet">	 
-
-<STYLE>
-@
--webkit-viewport {
-	width: device-width;
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link href="css/app.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+     ${demo.css}
+     
+     #leftNavigation li a {
+    border-bottom: 1px solid #395673;
+    color: #adadad;
+    display: block;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 0.8rem 1rem 0.8rem 3rem;
+    position: relative;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease 0s;
 }
-
-@
--moz-viewport {
-	width: device-width;
-}
-
-@
--ms-viewport {
-	width: device-width;
-}
-
-@
--o-viewport {
-	width: device-width;
-}
-
-@
-viewport {
-	width: device-width;
-}
-</STYLE>
+</style>
 </head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="js/chili-1.8b.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <SCRIPT src="js/Examples.js"></SCRIPT>
-<script type="text/javascript" src="js/jquery.dropdown.js"></script>
-<script src="js/modernizr.custom.63321.js"></script>
-<script src="js/highcharts.js"></script>
-<script src="js/modules/data.js"></script>
-<script src="js/modules/drilldown.js"></script>
-<SCRIPT>
-$(function() {
-		$("#example-basic").show().steps({
-			headerTag : "h3",
-			bodyTag : "section",
-			transitionEffect : "slideLeft",
-			autoFocus : true
-		});
-});
-</SCRIPT>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<script src="js/jquery.blockUI.js"></script>
+	<script src="js/chili-1.8b.js"></script>
 <script type="text/javascript">
 $(function () {
+	$("#example-basic").show().steps({
+		headerTag : "h3",
+		bodyTag : "section",
+		transitionEffect : "slideLeft",
+		autoFocus : true
+	});
+	$(document).ready(function() { 
+	    $('#qouteId').click(function() { 
+	        $.blockUI({ message: '<br/><br/>The insurace quote for yor vehicle is Rs 21789.<br/><br/>' }); 
+	        setTimeout($.unblockUI, 5000); 
+	    }); 
+	});
+	$(document).ready(function() { 
+	    $('#closeBtn').click(function() { 
+	    	$.unblockUI();
+	    }); 
+	});
+	 Highcharts.data({
+	        csv: document.getElementById('tsv').innerHTML,
+	        itemDelimiter: '\t',
+	        parsed: function (columns) {
 
-    Highcharts.data({
-        csv: document.getElementById('tsv').innerHTML,
-        itemDelimiter: '\t',
-        parsed: function (columns) {
+	            var brands = {},
+	                brandsData = [],
+	                versions = {},
+	                drilldownSeries = [];
+	            // Parse percentage strings
+	            columns[1] = $.map(columns[1], function (value) {
+	                if (value.indexOf('%') === value.length - 1) {
+	                    value = parseFloat(value);
+	                }
+	                return value;
+	            });
 
-            var brands = {},
-                brandsData = [],
-                versions = {},
-                drilldownSeries = [];
-            // Parse percentage strings
-            columns[1] = $.map(columns[1], function (value) {
-            	
-                if (value.indexOf('%') === value.length - 1) {
-                    value = parseFloat(value);
-                }
-                return value;
-            });
+	            $.each(columns[0], function (i, name) {
+	                var brand,
+	                    version;
 
-            $.each(columns[0], function (i, name) {
-                var brand,
-                    version;
+	                if (i > 0) {
 
-                if (i > 0) {
+					
+	                    // Split into brand and version
+	                    if(name.indexOf("#") != -1){
+	                    	var temp = name.split("#");
+	                    	brand = temp[0];
+	                    	version = temp[1];
+	                    } else{
+	                    	brand = name;
+	                    }
 
-				
-                    // Split into brand and version
-                    if(name.indexOf("#") != -1){
-                    	var temp = name.split("#");
-                    	brand = temp[0];
-                    	version = temp[1];
-                    } else{
-                    	brand = name;
-                    }
+	                    // Create the main data
+	                    if (!brands[brand]) {
+	                        brands[brand] = columns[1][i];
+	                    } else {
+	                        brands[brand] += columns[1][i];
+	                    }
 
-                    // Create the main data
-                    if (!brands[brand]) {
-                        brands[brand] = columns[1][i];
-                    } else {
-                        brands[brand] += columns[1][i];
-                    }
+	                    // Create the version data
+	                    if (version !== null) {
+	                        if (!versions[brand]) {
+	                            versions[brand] = [];
+	                        }
+	                        versions[brand].push([version, columns[1][i]]);
+	                    }
+	                }
 
-                    // Create the version data
-                    if (version !== null) {
-                        if (!versions[brand]) {
-                            versions[brand] = [];
-                        }
-                        versions[brand].push([version, columns[1][i]]);
-                    }
-                }
+	            });
 
-            });
+	            $.each(brands, function (name, y) {
+	                brandsData.push({
+	                    name: name,
+	                    y: y,
+	                    drilldown: versions[name] ? name : null
+	                });
+	            });
+	            $.each(versions, function (key, value) {
+	                drilldownSeries.push({
+	                    name: key,
+	                    id: key,
+	                    data: value
+	                });
+	            });
 
-            $.each(brands, function (name, y) {
-                brandsData.push({
-                    name: name,
-                    y: y,
-                    drilldown: versions[name] ? name : null
-                });
-            });
-            $.each(versions, function (key, value) {
-                drilldownSeries.push({
-                    name: key,
-                    id: key,
-                    data: value
-                });
-            });
+	            // Create the chart
+	            $('#containerPieChart').highcharts({
+	                chart: {
+	                    type: 'pie'
+	                },
+	                title: {
+	                    text: 'Trends Status. December, 2014. Uttar Pradesh'
+	                },
+	                subtitle: {
+	                    text: 'Click the slices to view details. Source: hannover-re.com.'
+	                },
+	                plotOptions: {
+	                    series: {
+	                        dataLabels: {
+	                            enabled: true,
+	                            format: '{point.name}: {point.y:.1f}%'
+	                        }
+	                    }
+	                },
 
-            // Create the chart
-            $('#container').highcharts({
-                chart: {
-                    type: 'pie'
-                },
-                title: {
-                    text: 'Trends Status. December, 2014. Uttar Pradesh'
-                },
-                subtitle: {
-                    text: 'Click the slices to view details. Source: hannover-re.com.'
-                },
-                plotOptions: {
-                    series: {
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.name}: {point.y:.1f}%'
-                        }
-                    }
-                },
+	                tooltip: {
+	                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+	                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+	                },
 
-                tooltip: {
-                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-                },
-
-                series: [{
-                    name: 'Trends	',
-                    colorByPoint: true,
-                    data: brandsData
-                }],
-                drilldown: {
-                    series: drilldownSeries
-                }
-            });
-        }
-    });
+	                series: [{
+	                    name: 'Trends	',
+	                    colorByPoint: true,
+	                    data: brandsData
+	                }],
+	                drilldown: {
+	                    series: drilldownSeries
+	                }
+	            });
+	        }
+	    });
 });
 
 
-		</script>
-<script type="text/javascript">
-$( function() {
-	 $( "#contentWrapper #contentRight section#accordion" ).accordion();
-});
 </script>
 <body>
 	<html:form action="/hannoverMotor">
+	<script src="../../js/highcharts.js"></script>
+<script src="../../js/modules/data.js"></script>
+<script src="../../js/modules/drilldown.js"></script>
 		<div
 			style="color: black; border: 1px; border-color: black; border-style: solid; padding-left: 260px;">
 			<img src="graphics/hannover_re.png;" />
@@ -187,10 +173,10 @@ $( function() {
 			<div id="contentLeft">
 
 				<ul id="leftNavigation">
-					<li class="active"><a href="/hannoverMotor.do?method=init"> Renew Policy</a></li>
-					<li><a href="/uploadFile.do?method=showReport"> Get Quote</a></li>
-					<li><a href="#"> About us</a></li>
-					<li><a href="#"> Contact us</a></li>
+					<li class="active"><a href="/hannoverMotor.do?method=init"><i class="fa fa-flask leftNavIcon"></i>Renew Policy</a></li>
+					<li><a href="/uploadFile.do?method=showReport"><i class="fa fa-flask leftNavIcon"></i>Get Quote</a></li>
+					<li><a href="#"><i class="fa fa-flask leftNavIcon"></i>About us</a></li>
+					<li><a href="#"><i class="fa fa-flask leftNavIcon"></i>Contact us</a></li>
 				</ul>
 			</div>
 			<div id="contentRight">
@@ -204,51 +190,58 @@ $( function() {
 							</SECTION>
 							<H3>Data Analysis</H3>
 							<SECTION>
-								<div id="container" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+								<div id="containerPieChart" align="center" style="margin: 0 auto"></div>
 
-								<pre id="tsv" style="display:none">Trends Status	Uttar Pradesh	
-								Failed#Prolonged stay<br>General Ward- Unspecified	1%	
-								Failed#Prolonged stay<br>CHOLECYSTECTOMY	1.5%	
-								Failed#Prolonged stay<br>Hernia	2.5%	
-								Passed	95%</pre>
+<pre id="tsv" style="display:none">Trends Status	Uttar Pradesh	
+Failed#Prolonged stay<br>General Ward- Unspecified	1%	
+Failed#Prolonged stay<br>CHOLECYSTECTOMY	1.5%	
+Failed#Prolonged stay<br>Hernia	2.5%	
+Passed	95%</pre>
 							</SECTION>
 							<H3>Admin Console</H3>
 							<SECTION>
-								<DIV id="accordion">
-<H3>Section 1</H3>
-<DIV>
-<P>		Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-		ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit		amet, 
-nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut		odio. 
-Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-		 </P></DIV>
-<H3>Section 2</H3>
-<DIV>
-<P>		Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-		purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-		velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-		suscipit faucibus urna.		 </P></DIV>
-<H3>Section 3</H3>
-<DIV>
-<P>		Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-		Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero		ac 
-tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis		lacinia 
-ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.		 </P>
-<UL>
-  <LI>List item one</LI>
-  <LI>List item two</LI>
-  <LI>List item three</LI></UL></DIV>
-<H3>Section 4</H3>
-<DIV>
-<P>		Cras dictum. Pellentesque habitant morbi tristique senectus et netus		et 
-malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in		faucibus 
-orci luctus et ultrices posuere cubilia Curae; Aenean lacinia		mauris vel est.
-		 </P>
-<P>		Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
-		Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-		inceptos himenaeos.		 </P></DIV></DIV>
-
-								
+								<div class="container" style="font-family: Lucida Grande,Lucida Sans Unicode,Arial,Helvetica,sans-serif; font-size: 12px;">
+							      <h2>Collapse</h2>
+							      <div class="panel-group" id="accordion">
+							        <div class="panel panel-default">
+							          <div class="panel-heading">
+							            <h4 class="panel-title">
+							              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Collapsible Group 1</a>
+							            </h4>
+							          </div>
+							          <div id="collapse1" class="panel-collapse collapse in">
+							            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+							            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+							          </div>
+							        </div>
+							        <div class="panel panel-default">
+							          <div class="panel-heading">
+							            <h4 class="panel-title">
+							              <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Collapsible Group 2</a>
+							            </h4>
+							          </div>
+							          <div id="collapse2" class="panel-collapse collapse">
+							            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+							            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+							          </div>
+							        </div>
+							        <div class="panel panel-default">
+							          <div class="panel-heading">
+							            <h4 class="panel-title">
+							              <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Collapsible Group 3</a>
+							            </h4>
+							          </div>
+							          <div id="collapse3" class="panel-collapse collapse">
+							            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+							            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+							          </div>
+							        </div>
+							      </div> 
+							    </div>
+							
 							</SECTION>
 							<H3>Calculate Premium</H3>
 							<SECTION>

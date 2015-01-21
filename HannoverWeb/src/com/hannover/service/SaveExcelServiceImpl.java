@@ -10,9 +10,11 @@ import org.jboss.annotation.ejb.RemoteBinding;
 
 import com.hannover.dao.DAOFactory;
 import com.hannover.dao.PatientClaimDetailDAO;
+import com.hannover.dao.UploadDetailDAO;
 import com.hannover.exception.DAOException;
 import com.hannover.helper.SearchVO;
-import com.hannover.model.PatientCliamDetail;
+import com.hannover.model.PatientClaimDetail;
+import com.hannover.model.UploadDetail;
 
 @Stateless
 @Remote(SaveExcelService.class)
@@ -20,8 +22,8 @@ import com.hannover.model.PatientCliamDetail;
 
 public class SaveExcelServiceImpl implements SaveExcelService {
 	PatientClaimDetailDAO dao = (PatientClaimDetailDAO) DAOFactory.getDAOInstance(PatientClaimDetailDAO.class);
-
-	public void createPatientCliamDetails(List<PatientCliamDetail> pdList){
+	UploadDetailDAO uploadDao = (UploadDetailDAO) DAOFactory.getDAOInstance(UploadDetailDAO.class);
+	public void createPatientCliamDetails(List<PatientClaimDetail> pdList){
 		try {
 			dao.create(pdList);
 		} catch (DAOException e) {
@@ -30,16 +32,79 @@ public class SaveExcelServiceImpl implements SaveExcelService {
 		}
 	}
 
-	public List<PatientCliamDetail> getFailedTrends(){
+	public List<PatientClaimDetail> getFailedTrends(){
 		SearchVO searchVO = new SearchVO();
 		searchVO.addIsNotNullCondition("ruleStatus");
-		List<PatientCliamDetail> pcdList = new ArrayList<PatientCliamDetail>();
+		List<PatientClaimDetail> pcdList = new ArrayList<PatientClaimDetail>();
 		try {
 			pcdList =  dao.search(searchVO);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		return pcdList;
+	}
+	
+	public UploadDetail uploadFileDetails(UploadDetail uploadDetail){
+		try {
+			uploadDetail = uploadDao.create(uploadDetail);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		return uploadDetail;
+	}
+	
+	public UploadDetail updateUploadFileDetails(UploadDetail uploadDetail){
+		try {
+			uploadDetail = uploadDao.createOrUpdate(uploadDetail);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		return uploadDetail;
+	}
+	
+	public String getCSVFileData(String state, String year, String month){
+		String csvData = null;
+		SearchVO searchVO = new SearchVO();
+		searchVO.addEqualsCondition("state", state);
+		searchVO.addEqualsCondition("year", year);
+		searchVO.addEqualsCondition("month", month);
+		try{
+			UploadDetail ud = uploadDao.searchUnique(searchVO);
+			csvData = ud.getCsvfile();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return csvData;
+	}
+	
+	public UploadDetail getUploadData(String state, String year, String month){
+		UploadDetail ud = null;
+		SearchVO searchVO = new SearchVO();
+		searchVO.addEqualsCondition("state", state);
+		searchVO.addEqualsCondition("year", year);
+		searchVO.addEqualsCondition("month", month);
+		try{
+			ud = uploadDao.searchUnique(searchVO);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		return ud;
+	}
+	
+	
+	public String getPieData(Long uploadDetailsId){
+		StringBuffer sb = new StringBuffer();
+		try{
+			List<String> pieDataList = dao.getPieData(uploadDetailsId);
+			for(String pieData: pieDataList){
+				sb.append(pieData);
+				sb.append("\n");
+			}
+		} catch(DAOException de){
+			de.printStackTrace();
+		}
+		return sb.toString();
 	}
 
 }

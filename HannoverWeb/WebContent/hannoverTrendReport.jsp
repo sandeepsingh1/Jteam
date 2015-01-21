@@ -17,7 +17,7 @@ $(function () {
 
     Highcharts.data({
         csv: document.getElementById('tsv').innerHTML,
-        itemDelimiter: '\t',
+        itemDelimiter: '~~~',
         parsed: function (columns) {
 
             var brands = {},
@@ -88,7 +88,7 @@ $(function () {
                     type: 'pie'
                 },
                 title: {
-                    text: 'Trends Status. December, 2014. Uttar Pradesh'
+                    text: 'Trends Status. '+document.getElementById('month').value+', '+document.getElementById('year').value+'. '+document.getElementById('state').value
                 },
                 subtitle: {
                     text: 'Click the slices to view details. Source: hannover-re.com.'
@@ -122,13 +122,50 @@ $(function () {
 
 
 		</script>
+		
+		<script>
+function fnUpload(){
+
+	window.document.uploadFileForm.action = '/uploadFile.do?method=showReport';
+	window.document.uploadFileForm.submit();
+
+}
+</script>
 	</head>
-	<body>
+	<body onload="fnUpload()">
 	<html:form action="/uploadFile">
 <script src="../../js/highcharts.js"></script>
 <script src="../../js/modules/data.js"></script>
 <script src="../../js/modules/drilldown.js"></script>
-<div style="color: black;border: 1px;border-color: black; border-style: solid;padding-left: 260px;"><img src="graphics/hannover_re.png;"/> </div>
+<div style="color: black;border: 1px;border-color: black; border-style: solid;padding-left: 20px;"><img src="graphics/hannover_re.png;"/>
+	<span style="margin-left: 100px;">Change Data Set &nbsp;&nbsp;&nbsp;&nbsp;
+        Select State&nbsp;&nbsp;<html:select property="state">
+        	<html:option value="Select">Select..</html:option>
+            <html:option value="Haryana">Haryana</html:option>
+            <html:option value="Delhi">Delhi</html:option>
+            <html:option value="Uttar Pradesh">Uttar Pradesh</html:option>
+            <html:option value="Others">Others</html:option>
+        </html:select>&nbsp;
+         Select Year&nbsp;&nbsp;<html:select property="year">
+        	<html:option value="Select">Select..</html:option>
+            <html:option value="2014">2014</html:option>
+            <html:option value="2015">2015</html:option>
+        </html:select>&nbsp;
+         Select Month&nbsp;&nbsp;<html:select property="month">
+        	<html:option value="Select">Select..</html:option>
+            <html:option value="January">January</html:option>
+            <html:option value="February">February</html:option>
+            <html:option value="March">March</html:option>
+            <html:option value="April">April</html:option>
+            <html:option value="May">May</html:option>
+            <html:option value="June">June</html:option>
+            <html:option value="July">July</html:option>
+            <html:option value="August">August</html:option>
+            <html:option value="September">September</html:option>
+            <html:option value="October">October</html:option>
+            <html:option value="November">November</html:option>
+            <html:option value="December">December</html:option>
+        </html:select>&nbsp;<input type="button" id="demo2"  value="Upload" onClick="javascript:fnUpload()"> </span></div>
 <div id="contentWrapper">
 
     <div id="contentLeft">
@@ -137,11 +174,12 @@ $(function () {
             <li >
                 <a href="/uploadFile.do?method=init"><i class="fa fa-flask leftNavIcon"></i> Upload File</a>
             </li>
+            
              <li class="active">
-                <a href="/uploadFile.do?method=showReport"><i class="fa fa-flask leftNavIcon"></i> Trends Report</a>
+                <a href="/uploadFile.do?method=showReport"><i class="fa fa-flask leftNavIcon"></i>Dashboard</a>
             </li>
             <li>
-                <a href="/uploadFile.do?method=showTable"><i class="fa fa-flask leftNavIcon"></i> Trends Table</a>
+                <a href="/uploadFile.do?method=showTable"><i class="fa fa-flask leftNavIcon"></i>Anomalies</a>
             </li>
             <li>
                 <a href="/uploadFile.do?method=showTrigger"><i class="fa fa-flask leftNavIcon"></i> Trigger 1</a>
@@ -155,6 +193,10 @@ $(function () {
             <li>
                 <a href="#"><i class="fa fa-flask leftNavIcon"></i> Contact us</a>
             </li>
+            </br></br>
+            <li>
+                <a href="/uploadFile.do?method=showTriggerPivot"><i class="fa fa-flask leftNavIcon"></i> Pivot Utility</a>
+            </li>
         </ul>
 
     </div>
@@ -164,12 +206,11 @@ $(function () {
 
 </div>
 <div id="container" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
-
-<pre id="tsv" style="display:none">Trends Status	Uttar Pradesh	
-Failed#Prolonged stay<br>General Ward- Unspecified	1%	
-Failed#Prolonged stay<br>CHOLECYSTECTOMY	1.5%	
-Failed#Prolonged stay<br>Hernia	2.5%	
-Passed	95%</pre>
+<html:hidden name="uploadFileForm" property="state" styleId="state"/>
+<html:hidden name="uploadFileForm" property="year" styleId="year"/>
+<html:hidden name="uploadFileForm" property="month" styleId="month"/>
+<pre id="tsv" style="display:none"><bean:write name="uploadFileForm" property="pieData" filter="false"/>
+</pre>
 </html:form>
 	</body>
 </html>
