@@ -34,7 +34,7 @@ public class UploadFileAction extends DispatchAction {
 		uploadFileForm.setState(uploadFileForm.getState());
 		uploadFileForm.setYear(uploadFileForm.getYear());
 		uploadFileForm.setMonth(uploadFileForm.getMonth());
-		return mapping.findForward("showReport");
+		return mapping.findForward("showTriggerPivot");
 	}
 	
 	public ActionForward showTable(ActionMapping mapping, ActionForm form,
