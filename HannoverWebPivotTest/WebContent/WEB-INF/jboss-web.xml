@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web>
+   <!-- Resource Environment References -->
+   <!-- Resource references -->
+   <!-- EJB References -->
+   <!-- Security Domain References -->
+   <!-- <security-domain>java:/jaas/temporaryfordemo</security-domain> 
+   <security-domain flushOnSessionInvalidation="true" >java:/jaas/nova_loyalty</security-domain>-->
+   <context-root>/</context-root>
+</jboss-web>
+

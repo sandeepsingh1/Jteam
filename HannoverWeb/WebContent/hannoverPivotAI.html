@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hannover AI</title>
+        <link rel="stylesheet" type="text/css" href="pivottable-master/dist/pivot.css">
+        <script type="text/javascript" src="pivottable-master/examples/ext/d3.v3.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="pivottable-master/examples/ext/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="pivottable-master/examples/ext/jquery-ui-1.9.2.custom.min.js"></script>
+        <script type="text/javascript" src="pivottable-master/examples/ext/jquery.csv-0.71.min.js"></script>
+        <script type="text/javascript" src="pivottable-master/dist/pivot.js"></script>
+        <script type="text/javascript" src="pivottable-master/dist/gchart_renderers.js"></script>
+        <script type="text/javascript" src="pivottable-master/dist/d3_renderers.js"></script>
+        	<script src="js/jquery.blockUI.js"></script>
+        <style>
+            .bodyAi {font-family: Arial;
+            font-size: 10px; margin: 10px;}
+            .node {
+              border: solid 1px white;
+              font: 10px Arial;
+              line-height: 12px;
+              overflow: hidden;
+              position: absolute;
+              text-indent: 2px;
+            }
+        </style>
+    </head>
+    <body style="margin-left:250px; width:85%; height:90%; overflow: scroll;">
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart", "charteditor"]});
+            $(function(){
+            	var combinations = getCombinations(["TPA","Beneficiary District Name","Hospital Name","Hospital distt","DiseaseType","Package Name","Claimed Amount","Age","Gender"]);
+            	var count= 0;
+        		var currentRows = ["TPA"];
+        		var currentCols = [];
+            	function getCombinations(chars) {
+            		  var result = [];
+            		  var f = function(prefix, chars) {
+            		    for (var i = 0; i < chars.length; i++) {
+            		      result.push(prefix +"#"+ chars[i]);
+            		      f(prefix +"#"+ chars[i], chars.slice(i + 1));
+            		    }
+            		  }
+            		  f('', chars);
+            		  return result;
+            		}
+           	        try {
+                           var input = $.csv.toArrays(document.getElementById('outputStream').value);
+                       }
+                       catch(e) { 
+                           alert("CSV Parse error."+e);
+                           return; 
+                       }
+                       $("#output").pivotUI( input, {
+                           rows: ["TPA"],
+                           cols: []
+                       },{
+                           renderers: $.extend(
+                           $.pivotUtilities.renderers, 
+                           $.pivotUtilities.gchart_renderers, 
+                           $.pivotUtilities.d3_renderers
+                           )
+                       });
+                       $('#nextBtn').click(function() { 
+                       	count = count +1;
+                       	var rowTemp = [];
+                       	var colTemp = [];
+                       	var temp2 = combinations[count];
+                       	temp2 = temp2.slice(1, temp2.length);
+                       	var temp3= temp2.split("#");
+                       	for(var i= 0; i < temp3.length; i++){
+                       		if(i == 0)
+                       			rowTemp.push(temp3[i]);
+                       		else{
+                       			if(colTemp.length == 2){
+                       				colTemp.reverse();
+                       				colTemp.pop();
+                       				colTemp.reverse();
+                       			}
+                       			colTemp.push(temp3[i]);
+                       		}
+                       	}
+                       	currentRows=rowTemp;
+                       	currentCols=colTemp;	
+                       	$("#output").pivotUI( input, {
+                               rows: rowTemp,
+                               cols: colTemp
+                           },{
+                               renderers: $.extend(
+                               $.pivotUtilities.renderers, 
+                               $.pivotUtilities.gchart_renderers, 
+                               $.pivotUtilities.d3_renderers
+                               )
+                           });
+                       }); 
+                       $('#saveAsTrend').click(function() { 
+                    	        $.blockUI({ css: { 
+                    	            border: 'none', 
+                    	            padding: '15px', 
+                    	            backgroundColor: '#000', 
+                    	            '-webkit-border-radius': '10px', 
+                    	            '-moz-border-radius': '10px', 
+                    	            opacity: .5, 
+                    	            color: '#fff' 
+                    	        } });
+                    	        saveAsTrend(currentRows,currentCols);
+                    	        //setTimeout($.unblockUI, 2000); 
+                       		//alert("currentRows = "+currentRows+"; currentCols = "+currentCols);
+                       });
+             });
+        </script>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Next" id="nextBtn"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Save as Trend" id="saveAsTrend"/>
+        <div id="output" class="bodyAi"></div>
+
+
+    </body>
+</html>

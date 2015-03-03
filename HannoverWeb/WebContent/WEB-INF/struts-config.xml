@@ -27,6 +27,7 @@
             <forward name="showTable" path="/hannoverTrendTable.jsp" />
             <forward name="showTrigger" path="/hannoverTrendTrigger.jsp" />
             <forward name="showTriggerPivot" path="/hannoverTrendTriggerPivot.jsp" />
+            <forward name="showTriggerPivotAi" path="/hannoverTrendTriggerPivotAI.jsp" />
         </action> 
         <action path="/hannoverMotor" 
             type="com.hannover.action.HannoverMotorAction" name="hannoverMotorForm" parameter="method" scope="request">

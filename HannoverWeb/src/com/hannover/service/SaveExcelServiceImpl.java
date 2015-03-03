@@ -10,10 +10,12 @@ import org.jboss.annotation.ejb.RemoteBinding;
 
 import com.hannover.dao.DAOFactory;
 import com.hannover.dao.PatientClaimDetailDAO;
+import com.hannover.dao.TrendsDAO;
 import com.hannover.dao.UploadDetailDAO;
 import com.hannover.exception.DAOException;
 import com.hannover.helper.SearchVO;
 import com.hannover.model.PatientClaimDetail;
+import com.hannover.model.Trends;
 import com.hannover.model.UploadDetail;
 
 @Stateless
@@ -23,6 +25,8 @@ import com.hannover.model.UploadDetail;
 public class SaveExcelServiceImpl implements SaveExcelService {
 	PatientClaimDetailDAO dao = (PatientClaimDetailDAO) DAOFactory.getDAOInstance(PatientClaimDetailDAO.class);
 	UploadDetailDAO uploadDao = (UploadDetailDAO) DAOFactory.getDAOInstance(UploadDetailDAO.class);
+	TrendsDAO trendsDao = (TrendsDAO)DAOFactory.getDAOInstance(TrendsDAO.class);
+	
 	public void createPatientCliamDetails(List<PatientClaimDetail> pdList){
 		try {
 			dao.create(pdList);
@@ -35,6 +39,7 @@ public class SaveExcelServiceImpl implements SaveExcelService {
 	public List<PatientClaimDetail> getFailedTrends(){
 		SearchVO searchVO = new SearchVO();
 		searchVO.addIsNotNullCondition("ruleStatus");
+		searchVO.addEqualsCondition("uploadDetailsId", getLatestUploadData().getId());
 		List<PatientClaimDetail> pcdList = new ArrayList<PatientClaimDetail>();
 		try {
 			pcdList =  dao.search(searchVO);
@@ -105,6 +110,83 @@ public class SaveExcelServiceImpl implements SaveExcelService {
 			de.printStackTrace();
 		}
 		return sb.toString();
+	}
+	
+	public String getCSVAIData(){
+		String csvData = null;
+		SearchVO searchVO = new SearchVO();
+		searchVO.addOrderDescending("id");
+		searchVO.setPageNumber(1);
+		searchVO.setPageSize(1);
+		try{
+			UploadDetail ud = uploadDao.searchUnique(searchVO);
+			if(ud != null)
+				csvData = ud.getCsvfileAi();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return csvData;
+	}
+	
+	public String getCSVBIData(){
+		String csvData = null;
+		SearchVO searchVO = new SearchVO();
+		searchVO.addOrderDescending("id");
+		searchVO.setPageNumber(1);
+		searchVO.setPageSize(1);
+		try{
+			UploadDetail ud = uploadDao.searchUnique(searchVO);
+			if(ud != null)
+				csvData = ud.getCsvfile();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return csvData;
+	}
+	
+	public UploadDetail getLatestUploadData(){
+		UploadDetail ud = null;
+		SearchVO searchVO = new SearchVO();
+		searchVO.addOrderDescending("id");
+		searchVO.setPageNumber(1);
+		searchVO.setPageSize(1);
+		try{
+			ud = uploadDao.searchUnique(searchVO);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		return ud;
+	}
+	
+	public void saveTrend(Trends trend){
+		try{
+			trendsDao.createOrUpdate(trend);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public List<Trends> getTrends(){
+		try{
+			SearchVO searchVO = new SearchVO();
+			return trendsDao.search(searchVO);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Trends getTrend(Long id){
+		try{
+			SearchVO searchVO = new SearchVO();
+			searchVO.addEqualsCondition("id", id);
+			return trendsDao.searchUnique(searchVO);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

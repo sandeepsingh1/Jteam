@@ -30,9 +30,9 @@ public class HibernateUtil {
 		try{
 			System.out.println("Configuring Hibernate session factory");
 			//URL url = Thread.currentThread().getContextClassLoader().getResource("hibernate.cfg.xml");
-			File f = new File("E:\\Hannover\\hibernate.cfg.xml"); 
+			//File f = new File("e:\\hannover\\hibernate.cfg.xml"); 
 			Configuration cfg = new AnnotationConfiguration();
-			sessionFactory = cfg.configure(f).buildSessionFactory();
+			sessionFactory = cfg.configure("/com/hannover/helper/hibernate.cfg.xml").buildSessionFactory();
 			System.out.println("Hibernate session factory configured");
 		}
 		catch(Throwable t){

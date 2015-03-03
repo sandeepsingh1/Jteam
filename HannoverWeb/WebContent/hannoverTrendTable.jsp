@@ -32,48 +32,20 @@
 <div style="color: black;border: 1px;border-color: black; border-style: solid;padding-left: 260px;"><img src="graphics/hannover_re.png;"/> </div>
 <div id="contentWrapper">
 
-    <div id="contentLeft">
+ <jsp:include page="leftMenu.jsp"></jsp:include>
 
-        <ul id="leftNavigation">
-            <li >
-                <a href="/uploadFile.do?method=init"><i class="fa fa-flask leftNavIcon"></i> Upload File</a>
-            </li>
-            <li>
-                <a href="/uploadFile.do?method=showTriggerPivot"><i class="fa fa-flask leftNavIcon"></i> Pivot Utility</a>
-            </li>
-             <li>
-                <a href="/uploadFile.do?method=showReport"><i class="fa fa-flask leftNavIcon"></i> Trends Report</a>
-            </li>
-            <li class="active">
-                <a href="/uploadFile.do?method=showTable"><i class="fa fa-flask leftNavIcon"></i> Trends Table</a>
-            </li>
-            <li>
-                <a href="/uploadFile.do?method=showTrigger"><i class="fa fa-flask leftNavIcon"></i> Trigger 1</a>
-            </li>
-            <li>
-                <a href="/uploadFile.do?method=showTrigger"><i class="fa fa-flask leftNavIcon"></i> Trigger 2</a>
-            </li>            
-            <li >
-                <a href="#"><i class="fa fa-flask leftNavIcon"></i> About us</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-flask leftNavIcon"></i> Contact us</a>
-            </li>
-        </ul>
-
-    </div>
-
-    <div id="contentRight">
-    </div>
+<div id="contentRight">
+</div>
 
 </div>
 
 <DIV id="main" style="padding-left: 260px;">
-	<H1>Trends Failure Report. December, 2014. Uttar Pradesh</H1>
+	<H1>Trends Failure Report. <bean:write name="uploadFileForm" property="month"/>, <bean:write name="uploadFileForm" property="year"/>.  <bean:write name="uploadFileForm" property="state"/> </H1>
 	<DIV id="demo">
 		<TABLE class="tablesorter" cellspacing="1">
 		  <THEAD>
 		  <TR>
+		  <TH> </TH>
 		    <TH>Trend</TH>
 		    <TH>Patient Name</TH>
 		    <TH>URN</TH>
@@ -83,10 +55,13 @@
 		    <TH>Hospital</TH>
 		    <TH>Stay Duration</TH>
 		    <TH>Failure Reason</TH>
+		    <TH>Admission Date</TH>
+		    <TH>Admission Time</TH>
 		    </TR></THEAD>
 		  <TBODY>
 		  <logic:iterate name="uploadFileForm" property="pcdList" id="pcdList">
 		  <TR>
+		    <TD><img src="flag.jpg" height="25px" width="25px" /></TD>
 		    <TD><STRONG><EM><bean:write name="pcdList" property="trendName"/></EM></STRONG></TD>
 		    <TD><STRONG><EM><bean:write name="pcdList" property="patientName"/></EM></STRONG></TD>
 		    <TD><STRONG><EM><bean:write name="pcdList" property="urn"/></EM></STRONG></TD>
@@ -96,6 +71,8 @@
 		    <TD><STRONG><EM><bean:write name="pcdList" property="hospitalName"/></EM></STRONG></TD>
 		    <TD><STRONG><EM><bean:write name="pcdList" property="numberOfDays"/> days</EM></STRONG></TD>
 		    <TD><STRONG><EM><bean:write name="pcdList" property="ruleRemarks"/></EM></STRONG></TD>
+		    <TD><STRONG><EM><bean:write name="pcdList" property="admissionDate"/></EM></STRONG></TD>
+		    <TD><STRONG><EM><bean:write name="pcdList" property="admissionTime"/></EM></STRONG></TD>
 		  </TR>
 		  </logic:iterate>
 		  </TBODY>

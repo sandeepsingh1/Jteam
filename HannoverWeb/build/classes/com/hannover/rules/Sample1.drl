@@ -4,7 +4,7 @@ import com.hannover.model.PatientClaimDetail;
 
 rule "Prolonged length of stay General Ward- Unspecified"
     when
-        p : PatientClaimDetail(diseaseName == "General Ward- Unspecified" &&  numberOfDays > 3 )
+       p : PatientClaimDetail(diseaseName == "General Ward- Unspecified" &&  numberOfDays > 3 )
     then
        p.ruleRemarks = "Stay for "+p.diseaseName+" can not be greater than 3 days";
        p.trendName = "Prolong Stay";
@@ -45,4 +45,4 @@ rule "Very Short/Prolonged Length of stay (LOS)"
        p.ruleRemarks = "Stay for "+p.diseaseName+" is too short.";
        p.trendName = "Very Short/Prolonged Length of stay (LOS)";
        p.ruleStatus = "failed";
-end 
+end

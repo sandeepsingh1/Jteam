@@ -31,6 +31,16 @@ public class UploadDetail extends AbstractPO {
 	private Long id;
 
 	private String csvfile;
+	
+	private String csvfileAi;
+
+	public String getCsvfileAi() {
+		return csvfileAi;
+	}
+
+	public void setCsvfileAi(String csvfileAi) {
+		this.csvfileAi = csvfileAi;
+	}
 
 	private String description;
 

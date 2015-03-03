@@ -8,6 +8,9 @@ import org.apache.struts.upload.FormFile;
 
 import com.hannover.bean.State;
 import com.hannover.model.PatientClaimDetail;
+import com.hannover.model.Trends;
+import com.hannover.service.SaveExcelService;
+import com.hannover.service.SaveExcelServiceImpl;
 
 public class UploadFileForm extends ActionForm{
 	
@@ -17,12 +20,46 @@ public class UploadFileForm extends ActionForm{
 	private List<PatientClaimDetail> pcdList = new ArrayList<PatientClaimDetail>();
 	private String stateSelected;
 	private String outputStream;
+	private String outputStreamAi;
 	private String pieData;
 	private String state;
 	private String month;
 	private String year;
 	private String description;
+	private String showPage;
+	private String wpt;
+	public String getAiColsList() {
+		return aiColsList;
+	}
+	public void setAiColsList(String aiColsList) {
+		this.aiColsList = aiColsList;
+	}
+	private List<Trends> trendsList = new ArrayList<Trends>();
+	private String aiColsList;
 	
+	public List<Trends> getTrendsList() {
+		SaveExcelService saveExcelService = new SaveExcelServiceImpl();
+		trendsList = saveExcelService.getTrends();
+		if(trendsList == null){
+			trendsList = new ArrayList<Trends>();
+		}
+		return trendsList;
+	}
+	public void setTrendsList(List<Trends> trendsList) {
+		this.trendsList = trendsList;
+	}
+	public String getWpt() {
+		return wpt;
+	}
+	public void setWpt(String wpt) {
+		this.wpt = wpt;
+	}
+	public String getShowPage() {
+		return showPage;
+	}
+	public void setShowPage(String showPage) {
+		this.showPage = showPage;
+	}
 	public FormFile getExcelFilePath() {
 		return excelFilePath;
 	}
@@ -82,6 +119,12 @@ public class UploadFileForm extends ActionForm{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getOutputStreamAi() {
+		return outputStreamAi;
+	}
+	public void setOutputStreamAi(String outputStreamAi) {
+		this.outputStreamAi = outputStreamAi;
 	}
 	
 }

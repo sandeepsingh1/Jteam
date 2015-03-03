@@ -16,7 +16,7 @@
 
     <script type="text/javascript">
         require(["wpt/WebPivotTable","dojo/domReady!"], function(WebPivotTable){
-            new WebPivotTable({
+        	 var webPivotTable  = new WebPivotTable({
                 customOptions:{
 
                     uiFlags: {
@@ -28,7 +28,7 @@
                         sourceDataMenu: 1,
                         exportReportMenu: 1,
                         settingMenu: 1,
-
+                        leavePageWarning: 0,
                         csvFileMenu: 1,
                         xlsFileMenu: 1,
                         xlsxFileMenu: 1,
@@ -41,12 +41,19 @@
                         copyPasteMenu: 1
                     }
                 }
-            },"wpt-container").setCsvRawData(document.getElementById('outputStream').value, ",", null);
+            },"wpt-container");
+        	 var wptData = document.getElementById('wpt').value;
+        	 if(wptData && wptData != ''){
+        		 webPivotTable.setWptString(document.getElementById('wpt').value, document.getElementById('outputStream').value, ",");
+        	 } else{
+        		 webPivotTable.setCsvRawData(document.getElementById('outputStream').value, ",", null);
+        	 }
+        	 
         });
 	</script>
 </head>
 
-<body class="claro" style="margin-left:250px; width:85%; height:90%; overflow: scroll;">
+<body class="claro" style="font-size:11px;margin-left:250px; width:80%; height:90%; overflow: scroll;">
 	<div id="wpt-container"></div>
 </body>
 </html>

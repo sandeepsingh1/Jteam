@@ -2,6 +2,7 @@ package com.hannover.helper;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import com.hannover.service.SaveExcelServiceImpl;
 	    	uploadDetail.setMonth(uploadFileForm.getMonth());
 	    	uploadDetail.setYear(uploadFileForm.getYear());
 	    	uploadDetail.setCsvfile(uploadFileForm.getOutputStream());
+	    	uploadDetail.setCsvfileAi(uploadFileForm.getOutputStreamAi());
 	    	SaveExcelService saveExcelService = new SaveExcelServiceImpl();
 	    	uploadDetail = saveExcelService.uploadFileDetails(uploadDetail);
 			Row row;
@@ -75,7 +77,13 @@ import com.hannover.service.SaveExcelServiceImpl;
 		    			else if(cellIndex == 5){
 		    				patientCliamDetail.setPatientName(getStringValue(cell));
 		    			}
-		    			if(cellIndex == 11){
+		    			else if(cellIndex == 7){
+		    				patientCliamDetail.setAdmissionDate(cell.getDateCellValue());
+		    			}
+		    			else if(cellIndex == 8){
+		    				patientCliamDetail.setAdmissionTime(cell.getDateCellValue());
+		    			}
+		    			else if(cellIndex == 11){
 		    				try{
 			    				patientCliamDetail.setNumberOfDays(BigDecimal.valueOf(cell.getNumericCellValue()));
 		    				}catch(Exception e){

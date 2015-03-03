@@ -1,0 +1,31 @@
+#contentRight span{
+  	margin-left: 80px;
+  	float:left;
+  	
+}
+
+
+#selectTriggerFilter{
+	
+	float: left;
+	margin-left: 150px;
+	width: 500px;
+	margin-top: 4px;
+	background-color: #fff;
+	
+	
+}
+
+#selectTriggerFilter select{
+	
+	width: 100%;
+	font-size: 13px;
+	font-weight: normal;
+	border-radius: 4px;
+	border: solid 1px #c2c2c2;
+	padding: 5px 10px;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		
+}
